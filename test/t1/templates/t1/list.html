@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{{datas}}
+{%for c in datas%}
+{{c}}
+{%endfor%}<br>
+{{a}}
+{%for b in a%}
+{{b.title}}
+{{b.content}}
+{%endfor%}<br>
+{%for bb in aa%}
+{{bb.title}}
+{{bb.content}}
+{%endfor%}
+</body>
+</html>

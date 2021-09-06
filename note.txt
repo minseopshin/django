@@ -1,0 +1,113 @@
+dJango : 파이썬의 웹 프레임워크,
+         제공기능도 풍부, 사용자도 가장 많음
+1.새로운 프로젝트(가상환경) 생성
+2.장고설치
+pip install django
+3.장고프로젝트 생성
+--django-admin startproject 프로젝트명
+django-admin startproject config
+바깥의 폴더명 변경(config->myfirst)
+cd myfirst    <--manage.py파일을 이용하여 명령어 수행
+4. 애플리케이션 생성
+프로젝트 : 개발대상이 되는 전체프로그램
+애플리케이션 : 프로젝트 하위의 서브프로그램
+--python manage.py startapp 앱이름
+python manage.py startapp polls
+장고의 MTV--polls/templates 폴더 생성
+      model templates  view
+자바   m       v        c
+5. 애플리케이션 등록(settings.py)
+INSTALLED_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'polls',
+]
+6. 장고에서 제공되는 기본테이블 생성 -->db.sqlite3 생성
+python manage.py migrate
+--migrate 디비에 변경사항이 있는 경우 반영해 주는 명령
+--db.sqlite3의 내용 확인
+D:\sqlite>sqlite3 d:\study\django\myfirst\db.sqlite3
+sqlite> .tables
+auth_group                  auth_user_user_permissions
+auth_group_permissions      django_admin_log
+auth_permission             django_content_type
+auth_user                   django_migrations
+auth_user_groups            django_session
+
+7.테이블 정의 (models.py)
+7-1)python manage.py makemigrations [애플리케이션명]   #데이터베이스 변경사항 코드 작성
+python manage.py makemigrations polls
+7-2)python manage.py migrate [애플리케이션명]  #데이터베이스 변경사항 적용
+python manage.py migrate polls
+--생성확인
+sqlite> .tables
+auth_group                  django_admin_log
+auth_group_permissions      django_content_type
+auth_permission             django_migrations
+auth_user                   django_session
+auth_user_groups            polls_choice
+auth_user_user_permissions  polls_question
+sqlite> .schema  polls_question
+sqlite> .schema polls_choice
+
+--참고)테이블 삭제시 (models.py)
+python manage.py makemigrations polls
+python manage.py migrate polls
+8)templates/index.html 작성
+9)장고프로젝트에서 실행(http://127.0.0.1:8000/polls --->index.html )
+9-1)views.py (함수기반 뷰)
+9-2)config/urls.py 작성
+9-3)polls/urls.py 작성
+
+===관리자 페이지(admin.py)에 Question, Choice 등록
+===서버실행======================================
+python manage.py runserver
+http://127.0.0.1:8000
+--장고의 관리자페이지
+http://127.0.0.1:8000/admin
+장고서버종료
+--관리자 생성
+python manage.py createsuperuser
+abc/1234
+-->서버실행, 관리자 로그인
+python manage.py runserver
+http://127.0.0.1:8000
+
+===sqlite3=====================================
+sqlite-tools-win32-x86-3350500.zip 다운로드, D:\sqlite
+윈도우+r - cmd - d: - cd sqlite - sqlite3
+.open 데이터베이스명 -데이터베이스가 있다면 열어주고 없으면 새로생성
+.open webdb
+.tables <-show tables
+테이블생성
+create table member (
+id char(10),
+name char(20),
+birthyear int,
+email char(30)
+);
+.tables
+insert into member values ('123','kim',1988,'kim@naver.com');
+select * from member;
+.header on :select문 사용시 헤더를 보여줌
+.mode column :select문 사용시 컬럼모드로 출력
+.schema 테이블명 :테이블의 열, 데이터형식등 정보보기
+.quit :종료
+---------------------
+D:\sqlite>sqlite3 webdb    :.open webdb가 포함됨
+sqlite> .tables
+member
+.quit
+--------------
+실습) member 애플리케이션에 다음과 같은 테이블 생성
+member 테이블
+username char(100)
+pw char(100)
+regdate date
+
+
+
